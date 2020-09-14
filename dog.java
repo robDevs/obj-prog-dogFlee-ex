@@ -21,7 +21,7 @@ public class dog {
                 addFlea(1);
             }
             else{
-                addFlea(-1);
+                addFlea(0);
             }
         }
     }
