@@ -24,7 +24,7 @@ public class controller {
 
             System.out.println("Dog #" + i + " is " + sFriendly + "friendly.");
 
-            System.out.println("Number of fleas: " + dogs[i].fleaPop.length);
+            System.out.println("Number of fleas: " /* + dogs[i].fleaPop.length); */ + "working on this part still...");
         }
 
     }
