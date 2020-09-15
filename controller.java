@@ -2,15 +2,26 @@ import java.util.*;
 
 public class controller {
 
+    private dog[] dogs;
+    private int iDogCount;
+    private int iCycles;
+    private int iFleaGender;
+
+    public controller() {
+        iDogCount = 0;
+        iCycles = 0;
+        iFleaGender = 0;
+    }
+
     public void createDogs(){
         Scanner sc = new Scanner(System.in);
         System.out.println("How many dogs should be managed? ");
-        int iDogCount = sc.nextInt();
+        iDogCount = sc.nextInt();
         System.out.println("How many cycles of activity should all the dogs go through? ");
         sc = new Scanner(System.in);
-        int iCycles = sc.nextInt();
+        iCycles = sc.nextInt();
 
-        dog[] dogs = new dog[iDogCount]; // create array of dog objects from user input count
+        dogs = new dog[iDogCount]; // create array of dog objects from user input count
 
         for (int i = 0; i < iDogCount; i++) { // instantiate each dog object in array
             dogs[i] = new dog();
@@ -26,16 +37,29 @@ public class controller {
             System.out.println("Dog #" + i + " created and is " + sFriendly + "friendly.");
         }
 
+
+    }
+
+    public void actionOfDogs() {
+        int iRandDog;
+
         for (int i = 0; i < iCycles; i++) {
-            System.out.println("\nCycle #" + (i+1) + ":\n");
+            System.out.println("\nCycle #" + (i+1) + ":");
             for (int j = 0; j < iDogCount; j++) {
-                System.out.println("Dog #" + j + ":");
-                dogs[j].doAction();
+                System.out.println("\nDog #" + j + ":");
+
+                iFleaGender = dogs[j].doAction(); // if doAction() returns a gender then a random dog will have addFlea(iFleaGender) called
+
+                if (iFleaGender != -1) {
+                    iRandDog = (int)((Math.random() * iDogCount));
+                    dogs[iRandDog].addFlea(iFleaGender); // random dog that a flea from current dog just jumped to
+                    System.out.println("A flea just jumped from this dog (dog #" + j + ") to dog #" + iRandDog + ".");
+                }
 
                 System.out.println("Flea count: " + dogs[j].countFlea()); // not the most efficient but this will set the flea fleaCount variable to the correct count on first iteration. if I don't leave this in for all iterations the determination of which dogs flea status has changed does not work correctly just below. i am not yet sure why.
 
                 if (dogs[j].hasCountChanged() && i != 0) { // if i == 0 then we are on the first cycle which means that the count of all new dogs has gone from 0 to some number
-                    System.out.println("Flea count has changed from previous iteration: " + dogs[j].countFlea());
+                    System.out.println("Flea count has changed from previous iteration.");// + dogs[j].countFlea());
                 }
 
             }
