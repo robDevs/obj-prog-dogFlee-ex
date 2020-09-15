@@ -3,7 +3,7 @@ import java.util.Random;
 public class dog {
     //create flea array on construction and other details on construction
     String descriptor = "";
-
+    int fleaCount = 0;
     flea[] fleaPop; //fleaPop = flea population
     boolean friendly = true; //as we all know, dogs are friendly by nature
     Random rand = new Random();
@@ -96,6 +96,16 @@ public class dog {
                 }
             }
         }
+    }
+    public int countFlea(){
+        int ct = 0;
+        for (int i = 0; i < fleaPop.length; i++) {
+            if (!fleaPop[i].get_removed()){
+                ct++;
+            }
+        }
+        this.fleaCount = ct;
+        return this.fleaCount;
     }
     public int pickFlea(){
         int i = 0;
