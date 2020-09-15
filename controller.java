@@ -31,11 +31,19 @@ public class controller {
             for (int j = 0; j < iDogCount; j++) {
                 System.out.println("Dog #" + j + ":");
                 dogs[j].doAction();
+
+                System.out.println("Flea count: " + dogs[j].countFlea()); // not the most efficient but this will set the flea fleaCount variable to the correct count on first iteration. if I don't leave this in for all iterations the determination of which dogs flea status has changed does not work correctly just below. i am not yet sure why.
+
+                if (dogs[j].hasCountChanged() && i != 0) { // if i == 0 then we are on the first cycle which means that the count of all new dogs has gone from 0 to some number
+                    System.out.println("Flea count has changed from previous iteration: " + dogs[j].countFlea());
+                }
+
             }
         }
-
     }
+
 }
+
 
 /** sudo sudo code.
  * it's like sudo code but even more lazy.
