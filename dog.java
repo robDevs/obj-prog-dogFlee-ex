@@ -7,9 +7,15 @@ public class dog {
     flea[] fleaPop; //fleaPop = flea population
     boolean friendly = true; //as we all know, dogs are friendly by nature
     Random rand = new Random();
-
+	private boolean bCountChanged = false; // instantiates a boolean to keep track of whether the flea count on a dog has changed
+	
     public dog(){
         fleaPop = new flea[101];
+		
+		for (int i = 0; i < 101; i++) { // instantiate each flea object in array
+            fleaPop[i] = new flea();
+        }
+		
         //decide if dog is friendly or not
         if(rand.nextBoolean()){
             friendly = false;
@@ -104,10 +110,23 @@ public class dog {
                 ct++;
             }
         }
-        this.fleaCount = ct;
+		
+		if (this.fleaCount != ct) { 
+			this.fleaCount = ct;
+			bCountChanged = true;
+		}
+		else {
+			bCountChanged = false;
+		}
+		
         return this.fleaCount;
     }
-    public int pickFlea(){
+	
+	public boolean hasCountChanged(){
+		return bCountChanged;
+	}
+	
+	public int pickFlea(){
         int i = 0;
         boolean keepLooking= true;
         while(keepLooking) {
