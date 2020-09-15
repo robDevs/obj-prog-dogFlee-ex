@@ -13,13 +13,26 @@ public class controller {
         iFleaGender = 0;
     }
 
-    public void createDogs(){
+    public void createDogs(){ // instantiates dog objects
         Scanner sc = new Scanner(System.in);
         System.out.println("How many dogs should be managed? ");
         iDogCount = sc.nextInt();
+
+        while (iDogCount <= 0) {
+            sc = new Scanner(System.in);
+            System.out.println("Must be 1 or more dogs. How many dogs should be managed? ");
+            iDogCount = sc.nextInt();
+        }
+
         System.out.println("How many cycles of activity should all the dogs go through? ");
         sc = new Scanner(System.in);
         iCycles = sc.nextInt();
+
+        while (iCycles <= 0) {
+            sc = new Scanner(System.in);
+            System.out.println("Must be 1 or more cycles. How many cycles of activity should all the dogs go through? ");
+            iCycles = sc.nextInt();
+        }
 
         dogs = new dog[iDogCount]; // create array of dog objects from user input count
 
@@ -40,8 +53,8 @@ public class controller {
 
     }
 
-    public void actionOfDogs() {
-        int iRandDog;
+    public void actionOfDogs() { // runs various dog actions over user chosen iterations
+        int iRandDog; // used to store a random array index for the dog a flea will jump to
 
         for (int i = 0; i < iCycles; i++) {
             System.out.println("\n\nCycle #" + (i+1) + ":");
@@ -50,7 +63,7 @@ public class controller {
 
                 iFleaGender = dogs[j].doAction(); // if doAction() returns a gender then a random dog will have addFlea(iFleaGender) called
 
-                if (iFleaGender != -1) {
+                if ((iFleaGender != -1) && (iDogCount > 1)) { // if iFleaGender == -1 then there is no flea jumping and if iDogCount == 1 then there is no dog to jump to
                     iRandDog = (int)((Math.random() * iDogCount));
                     dogs[iRandDog].addFlea(iFleaGender); // random dog that a flea from current dog just jumped to
                     System.out.println("A flea just jumped from this dog (dog #" + j + ") to dog #" + iRandDog + ".");
