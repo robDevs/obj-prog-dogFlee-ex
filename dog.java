@@ -3,13 +3,14 @@ import java.util.Random;
 public class dog {
     //create flea array on construction and other details on construction
     String descriptor = "";
-    int fleaCount = 0;
+    private int fleaCount;
     flea[] fleaPop; //fleaPop = flea population
     boolean friendly = true; //as we all know, dogs are friendly by nature
     Random rand = new Random();
     private boolean bCountChanged = false; // instantiates a boolean to keep track of whether the flea count on a dog has changed
 
-    public dog(){
+    public dog() {
+        fleaCount = 0;
         fleaPop = new flea[101];
 
         for (int i = 0; i < 101; i++) { // instantiate each flea object in array
