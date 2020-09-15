@@ -15,6 +15,7 @@ public class dog {
 
         for (int i = 0; i < 101; i++) { // instantiate each flea object in array
             fleaPop[i] = new flea();
+            fleaPop[i].set_removed(true);
         }
 
         //decide if dog is friendly or not
@@ -49,14 +50,17 @@ public class dog {
                 return shake();
             default:
                 System.out.println("The dog stares blankly. It knows not what to do.");
-                return 0;
+                return -11;
         }
 
     }
     //These 2 functions print text and execute fleaJump()
     public int tailWag(){
         System.out.println("The dog happily wags their tail.");
-        return fleaJump(pickFlea());
+        if(fleaCount > 0) {
+            return fleaJump(pickFlea());
+        }
+        else return -1;
     }
     public int play() {
         System.out.println("The dog runs off to play with other dogs.");
@@ -77,6 +81,8 @@ public class dog {
     }
     //fleaJump is the star of the show, selecting a flea to jump, return to controller, and remove itself from the fleaPop
     public int fleaJump(int i){
+        if(i < 0) return -1;
+        fleaCount -= 1;
         int g = fleaPop[i].get_gender();
         fleaPop[i].set_removed(true);
         return g;
@@ -86,6 +92,7 @@ public class dog {
         boolean gender0 = false;
         boolean gender1 = false;
         for (int i = 0; i < fleaPop.length; i++){
+            if(fleaCount > 100) return;
             if (!fleaPop[i].get_removed()) {
                 if (fleaPop[i].get_gender() == 0) {
                     gender0 = true;
@@ -100,27 +107,27 @@ public class dog {
             for (int i = 0; i < fleaPop.length; i++) {
                 if (fleaPop[i].get_removed()) {
                     fleaPop[i] = new flea();
+                    fleaPop[i].set_removed(false);
+                    fleaCount += 1;
                 }
             }
         }
     }
     public int countFlea(){
-        int ct = 0;
-        for (int i = 0; i < fleaPop.length; i++) {
-            if (!fleaPop[i].get_removed()){
-                ct++;
-            }
-        }
-
-        if (this.fleaCount != ct) {
-            this.fleaCount = ct;
-            bCountChanged = true;
-        }
-        else {
-            bCountChanged = false;
-        }
-
-        return this.fleaCount;
+        //I'm looking for a bug so I just simplified this section. 
+        //when adding a flea increase count, 
+        //when a flea jumps decrease count. 
+        return this.fleaCount; // no need to use "this" here. this is used when a local variable has same name as a var at the higher class scope. 
+        /**
+         * EG: 
+         * public void setNum(int num) {
+         *      this.num = num;         //num refers to the var passed to the function. 
+         *                              // this.num refers to the var that the class owns. 
+         *                              // afaik this because the var owned by the class is not known about by other bits of code at compilation. 
+         * 
+         * }
+         * 
+         */
     }
 
     public boolean hasCountChanged(){
@@ -128,22 +135,21 @@ public class dog {
     }
 
     public int pickFlea(){
-        int i = 0;
-        boolean keepLooking= true;
-        while(keepLooking) {
-            int pick = rand.nextInt(101);
-            if (!fleaPop[pick].get_removed()) {
-                i = pick;
-                keepLooking = false;
+        if(fleaCount == 0) return -1;
+        for(int i = 0; i < 101; i++) {
+            if(fleaPop[i].get_removed() == false) {
+                return i;
             }
         }
-        return i;
+        return -1;
     }
     public void addFlea(int gender){
+        if(fleaCount > 100) return;
         for (int i = 0; i < fleaPop.length; i++){
             if (fleaPop[i].get_removed()) {
                 fleaPop[i] = new flea();
                 fleaPop[i].set_gender(gender);
+                fleaCount += 1;
                 break;
             }
         }

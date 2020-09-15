@@ -60,9 +60,20 @@ public class controller {
             System.out.println("\n\nCycle #" + (i+1) + ":");
             for (int j = 0; j < iDogCount; j++) {
                 System.out.println("\nDog #" + j + ":");
+                
+                //let's show the flea count before taking action. 
+                System.out.println("Flea count before doing anything: " + dogs[j].countFlea()); // not the most efficient but this will set the flea fleaCount variable to the correct count on first iteration.
+
+                int oldCount = dogs[j].countFlea();
 
                 iFleaGender = dogs[j].doAction(); // if doAction() returns a gender then a random dog will have addFlea(iFleaGender) called
 
+                int count = dogs[j].countFlea();
+
+                if(count != oldCount) {
+                    System.out.println("Flea count has changed from previous iteration.");
+                }
+                
                 if ((iFleaGender != -1) && (iDogCount > 1)) { // if iFleaGender == -1 then there is no flea jumping and if iDogCount == 1 then there is no dog to jump to
                     iRandDog = (int)((Math.random() * iDogCount));
                     dogs[iRandDog].addFlea(iFleaGender); // random dog that a flea from current dog just jumped to
@@ -71,9 +82,9 @@ public class controller {
 
                 System.out.println("Flea count: " + dogs[j].countFlea()); // not the most efficient but this will set the flea fleaCount variable to the correct count on first iteration.
 
-                if (dogs[j].hasCountChanged() && i != 0) { // if i == 0 then we are on the first cycle which means that the count of all new dogs has gone from 0 to some number
-                    System.out.println("Flea count has changed from previous iteration.");// + dogs[j].countFlea());
-                }
+                //if (dogs[j].hasCountChanged() && i != 0) { // if i == 0 then we are on the first cycle which means that the count of all new dogs has gone from 0 to some number
+                  //  System.out.println("Flea count has changed from previous iteration.");// + dogs[j].countFlea());
+                //}
 
             }
         }
