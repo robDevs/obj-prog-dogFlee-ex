@@ -6,6 +6,9 @@ public class controller {
         Scanner sc = new Scanner(System.in);
         System.out.println("How many dogs should be managed? ");
         int iDogCount = sc.nextInt();
+        System.out.println("How many cycles of activity should all the dogs go through? ");
+        sc = new Scanner(System.in);
+        int iCycles = sc.nextInt();
 
         dog[] dogs = new dog[iDogCount]; // create array of dog objects from user input count
 
@@ -23,15 +26,14 @@ public class controller {
             System.out.println("Dog #" + i + " created and is " + sFriendly + "friendly.");
         }
 
-        /*for (int i = 0; i < iDogCount; i++) {
-
-            System.out.println("Number of fleas: ?");
-
-            dogs[i].doAction();
-
-            System.out.println("");
+        for (int i = 0; i < iCycles; i++) {
+            System.out.println("\nCycle #" + (i+1) + ":\n");
+            for (int j = 0; j < iDogCount; j++) {
+                System.out.println("Dog #" + j + ":");
+                dogs[j].doAction();
+            }
         }
-*/
+
     }
 }
 
